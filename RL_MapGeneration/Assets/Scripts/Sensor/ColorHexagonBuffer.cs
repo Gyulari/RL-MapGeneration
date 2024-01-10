@@ -3,12 +3,9 @@ using System.Linq;
 
 public class ColorHexagonBuffer : HexagonBuffer
 {
-    public ColorHexagonBuffer(int numChannels, int widht, int height)
-        : base(numChannels, widht, height) { }
-
-    public ColorHexagonBuffer(int numChannels, Vector2Int size)
-        : base(numChannels, size.x, size.y) { }
+    public ColorHexagonBuffer(int numChannels, int rank)
+        : base(numChannels, rank) { }
 
     public ColorHexagonBuffer(Shape shape)
-        : base(shape.NumChannels, shape.Width, shape.Height) { }
+        : base(shape.NumChannels, shape.Rank) { }
 }

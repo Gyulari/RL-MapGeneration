@@ -74,13 +74,13 @@ public abstract class HexagonSensorComponentBase : SensorComponent, IDisposable
         set { m_HexagonShape = value; UpdateObservationShapeInfo(); }
     }
     [SerializeField, HideInInspector]
-    private HexagonBuffer.Shape m_HexagonShape = new HexagonBuffer.Shape(1, 20, 20);
+    private HexagonBuffer.Shape m_HexagonShape = new HexagonBuffer.Shape(1, 6);
 
     private void UpdateObservationShapeInfo()
     {
-        m_ObservationShape = string.Format("{0} channel{1} x {2} width x {3} height",
+        m_ObservationShape = string.Format("{0} channel{1} x {2} rank",
                     m_HexagonShape.NumChannels, m_HexagonShape.NumChannels == 1 ? "" : "s",
-                    m_HexagonShape.Width, m_HexagonShape.Height);
+                    m_HexagonShape.Rank);
     }
 
     public bool HasSensor

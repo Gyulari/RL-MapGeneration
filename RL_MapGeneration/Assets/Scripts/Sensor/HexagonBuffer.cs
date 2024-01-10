@@ -2,56 +2,51 @@ using UnityEngine;
 using Unity.MLAgents;
 using System;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
 
 public class HexagonBuffer
 {
     public struct Shape
     {
         public int NumChannels;
-        public int Width;
-        public int Height;
+        public int Rank;
+        // public int Index;
         
-        public Vector2Int Size
+        /*
+        public int Size
         {
-            get { return new Vector2Int(Width, Height); }
-            set { Width = value.x; Height = value.y; }
+            get { return Rank; }
+            set { Rank = value; }
         }
+        */
 
-        public Shape(int numChannels, int width, int height)
+        public Shape(int numChannels, int rank)
         {
             NumChannels = numChannels;
-            Width = width;
-            Height = height;
+            Rank = rank;
         }
 
-        public Shape(int numChannels, Vector2Int size)
-            : this(numChannels, size.x, size.y) { }
-
-        // Channel, Width, Height가 유효한지 검사
+        // Channel, Rank가 유효한지 검사
         public void Validate()
         {
             if (NumChannels < 1) {
                 throw new UnityAgentsException("Hexagon buffer has no channels.");
             }
 
-            if (Width < 1) {
-                throw new UnityAgentsException("Invalid hexagon buffer width " + Width);
-            }
-
-            if (Height < 1) {
-                throw new UnityAgentsException("Invalid hexagon buffer height " + Height);
+            if (Rank < 1) {
+                throw new UnityAgentsException("Invalid hexagon buffer Rank " + Rank);
             }
         }
 
         public override string ToString()
         {
-            return $"Hexagon {NumChannels} x {Width} x {Height}";
+            return $"Hexagon {NumChannels} x {Rank}";
         }
     }
 
     public Shape GetShape()
     {
-        return new Shape(m_NumChannels, m_Width, m_Height);
+        return new Shape(m_NumChannels, m_Rank);
     }
 
     public int NumChannels
@@ -61,27 +56,28 @@ public class HexagonBuffer
     }
     private int m_NumChannels;
 
-    public int Width
+    public int Rank
     {
-        get { return m_Width; }
-        set { m_Width = value; Initialize(); }
+        get { return m_Rank; }
+        set { m_Rank = value; Initialize(); }
     }
-    private int m_Width;
+    private int m_Rank;
 
+    /*
     public int Height
     {
         get { return m_Height; }
         set { m_Height = value; Initialize(); }
     }
     private int m_Height;
+    */
 
     private float[][] m_Values;
 
-    public HexagonBuffer(int numChannels, int width, int height)
+    public HexagonBuffer(int numChannels, int rank)
     {
         m_NumChannels = numChannels;
-        m_Width = width;
-        m_Height = height;
+        m_Rank = rank;
 
         Initialize();
     }
@@ -90,19 +86,16 @@ public class HexagonBuffer
     {
         m_Values = new float[NumChannels][];
 
+        int NumHex = (Rank == 1) ? 1 : 6 * (Rank - 1);
+
         for(int i=0; i<NumChannels; i++) {
-            m_Values[i] = new float[Width * Height];
+            m_Values[i] = new float [NumHex];
         }
     }
 
-    public virtual float Read(int channel, int x, int y)
+    public virtual float Read(int channel, int rank, int hexNum)
     {
-        return m_Values[channel][y * Width + x];
-    }
-
-    public virtual float Read(int channel, Vector2Int pos)
-    {
-        return Read(channel, pos.x, pos.y);
+        return m_Values[channel][GetHexIndex(rank, hexNum)];
     }
 
     public virtual Color32[][] GetLayerColors()
@@ -116,5 +109,17 @@ public class HexagonBuffer
         throw new UnityAgentsException(
             "HexagonBuffer doesn't support PNG compression. " +
             "Use the ColorHexagonBuffer instead.");
+    }
+
+    private int GetHexIndex(int rank, int hexNum)
+    {
+        if (rank == 1) return 0;
+
+        int hexIdx = 0;
+        for(int i=0; i <= rank; i++) {
+            hexIdx += 6 * (i - 2);
+        }
+
+        return hexIdx;
     }
 }
