@@ -27,6 +27,7 @@ public class HexagonBuffer
         public Shape(int numChannels, Vector2Int size)
             : this(numChannels, size.x, size.y) { }
 
+        // Channel, Width, Height가 유효한지 검사
         public void Validate()
         {
             if (NumChannels < 1) {
