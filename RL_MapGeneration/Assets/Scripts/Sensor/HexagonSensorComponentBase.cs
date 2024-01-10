@@ -79,7 +79,8 @@ public abstract class HexagonSensorComponentBase : SensorComponent, IDisposable
     private void UpdateObservationShapeInfo()
     {
         m_ObservationShape = string.Format("{0} channel{1} x {2} rank",
-                    m_HexagonShape.NumChannels, m_HexagonShape.NumChannels == 1 ? "" : "s",
+                    m_HexagonShape.NumChannels,
+                    m_HexagonShape.NumChannels == 1 ? "" : "s",
                     m_HexagonShape.Rank);
     }
 

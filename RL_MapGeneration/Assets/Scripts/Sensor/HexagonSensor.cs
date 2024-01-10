@@ -43,7 +43,7 @@ public class HexagonSensor : ISensor, IDisposable
         HandleCompressionType();
 
         m_ObservationSpec = ObservationSpec.Visual(
-            m_HexagonBuffer.Height, m_HexagonBuffer.Width, m_HexagonBuffer.NumChannels, observationType);
+            m_HexagonBuffer.Rank, m_HexagonBuffer.Rank, m_HexagonBuffer.NumChannels, observationType);
     }
 
     protected void HandleCompressionType()
@@ -52,9 +52,9 @@ public class HexagonSensor : ISensor, IDisposable
 
         if (m_CompressionType == SensorCompressionType.PNG) {
             m_PerceptionTexture = new Texture2D(
-                m_HexagonBuffer.Width, m_HexagonBuffer.Height, TextureFormat.RGB24, false);
+                m_HexagonBuffer.Rank, m_HexagonBuffer.Rank, TextureFormat.RGB24, false);
             m_CompressedObs = new List<byte>(
-                m_HexagonBuffer.Width * m_HexagonBuffer.Height * m_HexagonBuffer.NumChannels);
+                m_HexagonBuffer.Rank * m_HexagonBuffer.Rank * m_HexagonBuffer.NumChannels);
         }
     }
 
@@ -89,8 +89,8 @@ public class HexagonSensor : ISensor, IDisposable
     public int Write(ObservationWriter writer)
     {
         int numWritten = 0;
-        int w = m_HexagonBuffer.Width;
-        int h = m_HexagonBuffer.Height;
+        int w = m_HexagonBuffer.Rank;
+        int h = m_HexagonBuffer.Rank;
         int n = m_HexagonBuffer.NumChannels;
 
         for (int c = 0; c < n; c++){

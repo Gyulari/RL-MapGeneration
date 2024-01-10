@@ -9,7 +9,7 @@ public class TestAgent : Agent
 
     public override void Initialize()
     {
-        m_SensorBuffer = new ColorHexagonBuffer(1, 10, 10);
+        m_SensorBuffer = new ColorHexagonBuffer(1, 6);
 
         var sensorComp = GetComponent<HexagonSensorComponent>();
         sensorComp.HexagonBuffer = m_SensorBuffer;
