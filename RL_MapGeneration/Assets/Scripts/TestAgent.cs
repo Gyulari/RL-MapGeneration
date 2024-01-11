@@ -16,6 +16,7 @@ public class TestAgent : Agent
 
         sensorComp.ChannelLabels = new List<ChannelLabel>()
         {
+            //new ChannelLabel("Start Tile", new Color());
             new ChannelLabel("Wall", new Color32(0, 128, 255, 255)),
             new ChannelLabel("Food", new Color32(64, 255, 64, 255)),
             new ChannelLabel("Visited", new Color32(255, 64, 64, 255)),
