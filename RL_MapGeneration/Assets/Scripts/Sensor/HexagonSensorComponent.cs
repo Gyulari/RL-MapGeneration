@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using Unity.MLAgents.Sensors;
-using UnityEngine;
 
 public class HexagonSensorComponent : HexagonSensorComponentBase
 {

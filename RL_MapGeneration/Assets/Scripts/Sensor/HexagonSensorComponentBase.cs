@@ -176,7 +176,7 @@ public abstract class HexagonSensorComponentBase : SensorComponent, IDisposable
 
             CoroutineUtil.Stop(this, m_Debug_OnSensorCreated);
             m_Debug_OnSensorCreated = new InvokeAfterFrames(
-                this, Debug_ToggleDrawGridBuffer).Coroutine;
+                this, Debug_ToggleDrawHexagonBuffer).Coroutine;
         }
 #endif
 
@@ -201,16 +201,16 @@ public abstract class HexagonSensorComponentBase : SensorComponent, IDisposable
     #region Debug Methods
 
     // Invoked on sensor creation and on m_Debug_DrawGridBuffer toggle change.
-    private void Debug_ToggleDrawGridBuffer()
+    private void Debug_ToggleDrawHexagonBuffer()
     {
         if (Debug_HasRuntimeSensor()) {
             if (m_Debug_DrawHexagonBuffer != m_Debug_DrawHexagonBufferEnabled) {
-                Debug_SetDrawGridBufferEnabled(m_Debug_DrawHexagonBuffer);
+                Debug_SetDrawHexagonBufferEnabled(m_Debug_DrawHexagonBuffer);
             }
         }
     }
 
-    private void Debug_SetDrawGridBufferEnabled(bool enabled, bool standby = false)
+    private void Debug_SetDrawHexagonBufferEnabled(bool enabled, bool standby = false)
     {
         if (enabled) {
             m_Debug_ChannelData?.Dispose();
@@ -302,7 +302,7 @@ public abstract class HexagonSensorComponentBase : SensorComponent, IDisposable
     {
         if (Debug_HasRuntimeSensor() && m_Debug_CreateSensorOnAwake && m_Debug_CreateSensorOnValidate) {
             // Debug grid drawer standby during sensor refresh.
-            Debug_SetDrawGridBufferEnabled(false, true);
+            Debug_SetDrawHexagonBufferEnabled(false, true);
 
             CreateSensors();
             m_Debug_FrameCount = 0;
@@ -351,7 +351,7 @@ public abstract class HexagonSensorComponentBase : SensorComponent, IDisposable
 
     private void OnApplicationQuit()
     {
-        Debug_SetDrawGridBufferEnabled(false);
+        Debug_SetDrawHexagonBufferEnabled(false);
     }
 
     #endregion
