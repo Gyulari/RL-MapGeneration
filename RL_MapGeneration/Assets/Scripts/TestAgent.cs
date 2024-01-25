@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
+using Gyulari.HexSensor;
 
 public class TestAgent : Agent
 {
@@ -16,6 +17,7 @@ public class TestAgent : Agent
 
         sensorComp.ChannelLabels = new List<ChannelLabel>()
         {
+            // new ChannelLabel("Start Tile", new Color32(0, 
             //new ChannelLabel("Start Tile", new Color());
             new ChannelLabel("Wall", new Color32(0, 128, 255, 255)),
             new ChannelLabel("Food", new Color32(64, 255, 64, 255)),

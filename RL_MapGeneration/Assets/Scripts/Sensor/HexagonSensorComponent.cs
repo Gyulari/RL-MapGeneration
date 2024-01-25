@@ -1,16 +1,19 @@
 using Unity.MLAgents.Sensors;
 
-public class HexagonSensorComponent : HexagonSensorComponentBase
+namespace Gyulari.HexSensor
 {
-    // Hexagon Sensor 积己
-    public override ISensor[] CreateSensors()
+    // Implementation of a Hexagon Sensor Compoennt
+    public class HexagonSensorComponent : HexagonSensorComponentBase
     {
-        // Hexagon Buffer啊 绝阑 矫 积己
-        if(HexagonBuffer == null) {            
-            HexagonShape.Validate();
-            HexagonBuffer = new ColorHexagonBuffer(HexagonShape);
-        }
+        public override ISensor[] CreateSensors()
+        {
+            // Create HexagonBuffer
+            if (HexagonBuffer == null) {
+                HexagonShape.Validate();
+                HexagonBuffer = new ColorHexagonBuffer(HexagonShape);
+            }
 
-        return base.CreateSensors();
+            return base.CreateSensors();
+        }
     }
 }

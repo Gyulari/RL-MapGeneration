@@ -2540,6 +2540,16 @@ MonoBehaviour:
   m_CompressionType: 1
   m_ObservationType: 0
   m_ChannelLabels: []
+  m_Debug_CreateSensorOnAwake: 1
+  m_Debug_CreateSensorOnValidate: 0
+  m_Debug_FrameInterval: 5
+  m_Debug_DrawHexagonBuffer: 1
+  m_Debug_HexagonBufferDrawer:
+    Context: {fileID: 0}
+    Editor: {fileID: 0}
+    HexagonSizeRatio: 0
+    IsEnabled: 0
+    IsStandby: 0
 --- !u!4 &2006806893
 Transform:
   m_ObjectHideFlags: 0
