@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
 using Gyulari.HexSensor;
+using Gyulari.HexSensor.Util;
 
 public class TestAgent : Agent
 {
@@ -10,6 +11,8 @@ public class TestAgent : Agent
 
     public override void Initialize()
     {
+        Debug.Log(IOUtil.ImportDataByJson<MaterialInfo>());
+
         m_SensorBuffer = new ColorHexagonBuffer(1, 6);
 
         var sensorComp = GetComponent<HexagonSensorComponent>();

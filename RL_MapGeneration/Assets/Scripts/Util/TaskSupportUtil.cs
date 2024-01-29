@@ -5,8 +5,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Gyulari.HexSensor
+namespace Gyulari.HexSensor.Util
 {
+    [System.Serializable]
     public struct MaterialInfo
     {
         public string name;
@@ -36,6 +37,7 @@ namespace Gyulari.HexSensor
                         Material material = AssetDatabase.LoadAssetAtPath<Material>(assetPath);
                         mInfos.Add(new MaterialInfo(material.name, (Color32)material.color));
                     }
+                    IOUtil.ExtractDataByJson(mInfos);
                 }
                 else {
                     Debug.LogWarning("There is no Material Assets");
@@ -45,9 +47,11 @@ namespace Gyulari.HexSensor
                 Debug.LogWarning("You must have correct directory. ");
             }
 
-            foreach(var info in mInfos) {
-                Debug.Log(info.name);
-                Debug.Log(info.color);
+            List<MaterialInfo> mmm = IOUtil.ImportDataByJson<MaterialInfo>();
+
+            foreach(var m in mmm) {
+                Debug.Log(m.name);
+                Debug.Log(m.color);
             }
         }
     }
