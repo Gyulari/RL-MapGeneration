@@ -37,7 +37,7 @@ namespace Gyulari.HexSensor.Util
                         Material material = AssetDatabase.LoadAssetAtPath<Material>(assetPath);
                         mInfos.Add(new MaterialInfo(material.name, (Color32)material.color));
                     }
-                    IOUtil.ExtractDataByJson(mInfos);
+                    IOUtil.ExportDataByJson(mInfos, "Config/MaterialInfos.json");
                 }
                 else {
                     Debug.LogWarning("There is no Material Assets");
@@ -45,13 +45,6 @@ namespace Gyulari.HexSensor.Util
             }
             else {
                 Debug.LogWarning("You must have correct directory. ");
-            }
-
-            List<MaterialInfo> mmm = IOUtil.ImportDataByJson<MaterialInfo>();
-
-            foreach(var m in mmm) {
-                Debug.Log(m.name);
-                Debug.Log(m.color);
             }
         }
     }
