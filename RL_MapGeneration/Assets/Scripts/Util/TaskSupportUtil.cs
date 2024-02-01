@@ -40,11 +40,11 @@ namespace Gyulari.HexSensor.Util
                     IOUtil.ExportDataByJson(mInfos, "Config/MaterialInfos.json");
                 }
                 else {
-                    Debug.LogWarning("There is no Material Assets");
+                    Debug.LogWarning("Material asset does not exist in \"Asset/Materials/Tiles\". Please add a valid material to the directory.");
                 }
             }
             else {
-                Debug.LogWarning("You must have correct directory. ");
+                Debug.LogWarning("Directory for generating ChannelLabel List does not exist. Please create the \"Asset/Materials/Tiles\" directory.");
             }
         }
     }

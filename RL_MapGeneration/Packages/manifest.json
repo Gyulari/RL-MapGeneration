@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
     "com.unity.collab-proxy": "1.17.7",
     "com.unity.feature.development": "1.0.1",
+    "com.unity.memoryprofiler": "1.0.0",
     "com.unity.ml-agents": "2.0.1",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.2",
@@ -37,7 +39,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm"
+    "com.unity.modules.xr": "1.0.0"
   }
 }
