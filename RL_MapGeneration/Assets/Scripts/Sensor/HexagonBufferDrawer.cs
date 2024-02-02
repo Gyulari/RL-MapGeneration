@@ -136,8 +136,8 @@ namespace Gyulari.HexSensor
                 if (draw) {
                     // Rect 연산
                     CalcRects(rect);
-                    // ValidateTexture(m_Target.Buffer.Rank, m_Target.Buffer.Rank);
-                    ValidateTexture(64, 64);
+                    var tSizeTuple = GetTextureSizeByRank(m_Target.Buffer.Rank, 16);
+                    ValidateTexture(tSizeTuple.width, tSizeTuple.height);
 
                     if (m_Target.ChannelData.HasHexagonPositions) {
                         DrawGL(DrawBackground, DrawPartialGrid);
@@ -196,6 +196,13 @@ namespace Gyulari.HexSensor
                 m_Pixels = m_Texture.GetRawTextureData<Color32>();    // CPU 내의 텍스처 데이터를 직접 반환
                 m_Black = Enumerable.Repeat(new Color32(0, 0, 0, 255), w * h).ToArray();    // m_Black을 전부 black 색상으로 채움
             }
+        }
+
+        private (int width, int height) GetTextureSizeByRank(int rank, int resolution)
+        {
+            int width = 7 * resolution * (2 * rank - 1);
+            int height = 4 * resolution * (3 * rank - 1);
+            return (width, height);
         }
 
         private void DrawGL(params Action[] jobs)
@@ -281,6 +288,11 @@ namespace Gyulari.HexSensor
                         m_Pixels[hIdx] = channelData.GetColor(c);
                 }
             }
+
+            for(int i=0; i < 1500; i++) {
+                m_Pixels[i] = new Color(255f, 255f, 255f, 255f);
+            }
+
             m_Texture.Apply();
         }
 

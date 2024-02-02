@@ -88,7 +88,7 @@ namespace Gyulari.HexSensor.Util
                 var cellTuples = GenerateHexCellCentorPosList(r);
 
                 foreach(var t in cellTuples) {
-                    hexCell_Infos.Add(new HexCell_Info(t.Item1, t.Item2));
+                    hexCell_Infos.Add(new HexCell_Info(t.hexIdx, t.centerPos));
                 }
 
                 hexCell_InfosByRank.Add(new HexCell_InfoByRank(r, hexCell_Infos));
@@ -97,7 +97,7 @@ namespace Gyulari.HexSensor.Util
             IOUtil.ExportDataByJson(hexCell_InfosByRank, "Config/HexCellCenterPosInfo.json");
         }
 
-        private static List<(int, Vector2)> GenerateHexCellCentorPosList(int rank)
+        private static List<(int hexIdx, Vector2 centerPos)> GenerateHexCellCentorPosList(int rank)
         {
             if(rank == 1) {
                 return new List<(int, Vector2)>() { (0, Vector2.zero) };
