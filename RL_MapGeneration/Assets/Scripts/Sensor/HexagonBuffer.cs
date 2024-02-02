@@ -111,13 +111,14 @@ public class HexagonBuffer
             "Use the ColorHexagonBuffer instead.");
     }
 
+    // 얘 뭔 코드를 짜놓은겨 도대체
     private int GetHexIndex(int rank, int hexNum)
     {
         if (rank == 1) return 0;
 
         int hexIdx = 0;
-        for(int i=0; i <= rank; i++) {
-            hexIdx += 6 * (i - 2);
+        for(int i=2; i <= rank; i++) {
+            hexIdx += 6 * (i - 1);
         }
 
         return hexIdx;

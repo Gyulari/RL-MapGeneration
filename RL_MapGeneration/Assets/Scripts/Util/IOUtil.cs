@@ -11,6 +11,7 @@ namespace Gyulari.HexSensor.Util
         {
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented
             };
 
