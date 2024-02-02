@@ -85,9 +85,9 @@ namespace Gyulari.HexSensor.Util
 
             for(int r=1; r<=maxRank; r++) {
                 List<HexCell_Info> hexCell_Infos = new List<HexCell_Info>();
-                var Tuple = GenerateHexCellCentorPosList(r);
+                var cellTuples = GenerateHexCellCentorPosList(r);
 
-                foreach(var t in Tuple) {
+                foreach(var t in cellTuples) {
                     hexCell_Infos.Add(new HexCell_Info(t.Item1, t.Item2));
                 }
 
@@ -100,21 +100,36 @@ namespace Gyulari.HexSensor.Util
         private static List<(int, Vector2)> GenerateHexCellCentorPosList(int rank)
         {
             if(rank == 1) {
-                return new List<(int, Vector2)>() { (0, new Vector2(0, 0)) };
+                return new List<(int, Vector2)>() { (0, Vector2.zero) };
             }
 
             int baseHexIdx = 1;
-
-            for(int r=3; r<=rank; r++) {
-                baseHexIdx += (r - 2) * 6;
-            }
-
             Vector2 baseCenterPos = new Vector2((rank - 1) * 7, 0);
+
+            for (int r=3; r<=rank; r++) {
+                baseHexIdx += (r - 2) * 6;
+            }            
             
             List<(int, Vector2)> hexCell_ByRank = new List<(int, Vector2)>();
 
             hexCell_ByRank.Add((baseHexIdx, baseCenterPos));
 
+            for(int i = 0; i < 6; i++) {
+                int xMovement = (i < 3) ? -1 : 1;
+                int yMovement = (i == 0 || i == 5) ? -1 : 1;
+                float xOffset = (i == 1 || i == 4) ? 7.0f : 3.5f;
+                float yOffset = (i == 1 || i == 4) ? 0.0f : 6.0f;
+
+                for(int j = 1; j<rank; j++) {
+                    if (i == 5 && j == rank - 1)
+                        break;
+
+                    baseCenterPos = new Vector2(baseCenterPos.x + (xOffset * xMovement), baseCenterPos.y + (yOffset * yMovement));
+                    hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
+                }
+            }
+
+            /*
             for(int i = 1; i<rank; i++) {
                 baseCenterPos = new Vector2(baseCenterPos.x - 3.5f, baseCenterPos.y - 6.0f);
                 hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
@@ -139,6 +154,7 @@ namespace Gyulari.HexSensor.Util
                 baseCenterPos = new Vector2(baseCenterPos.x + 3.5f, baseCenterPos.y - 6.0f);
                 hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
             }
+            */
 
             return hexCell_ByRank;
         }
