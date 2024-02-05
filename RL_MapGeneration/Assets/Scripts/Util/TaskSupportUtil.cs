@@ -46,6 +46,18 @@ namespace Gyulari.HexSensor.Util
         }
     }
 
+    public struct HexagonCellPixels
+    {
+        public int resolution;
+        public bool[] pixels;
+
+        public HexagonCellPixels(int resolution, bool[] pixels)
+        {
+            this.resolution = resolution;
+            this.pixels = pixels;
+        }
+    }
+
     public class TaskSupportUtil
     {
         TaskSupportUtil instance = new TaskSupportUtil();
@@ -129,34 +141,67 @@ namespace Gyulari.HexSensor.Util
                 }
             }
 
-            /*
-            for(int i = 1; i<rank; i++) {
-                baseCenterPos = new Vector2(baseCenterPos.x - 3.5f, baseCenterPos.y - 6.0f);
-                hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
-            }
-            for (int i = 1; i < rank; i++) {
-                baseCenterPos = new Vector2(baseCenterPos.x - 7.0f, baseCenterPos.y);
-                hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
-            }
-            for (int i = 1; i < rank; i++) {
-                baseCenterPos = new Vector2(baseCenterPos.x - 3.5f, baseCenterPos.y + 6.0f);
-                hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
-            }
-            for (int i = 1; i < rank; i++) {
-                baseCenterPos = new Vector2(baseCenterPos.x + 3.5f, baseCenterPos.y + 6.0f);
-                hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
-            }
-            for (int i = 1; i < rank; i++) {
-                baseCenterPos = new Vector2(baseCenterPos.x + 7.0f, baseCenterPos.y);
-                hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
-            }
-            for (int i = 1; i < rank-1; i++) {
-                baseCenterPos = new Vector2(baseCenterPos.x + 3.5f, baseCenterPos.y - 6.0f);
-                hexCell_ByRank.Add((++baseHexIdx, baseCenterPos));
-            }
-            */
-
             return hexCell_ByRank;
+        }
+
+        [MenuItem("HexagonSensor/Generate HexagonCell Pixels", false, 3)]
+        static void GenerateHexagonCellPixels()
+        {
+            int maxResolution = 32;
+
+            List<HexagonCellPixels> hexCell_PixelsInfo = new List<HexagonCellPixels>();
+
+            for(int i=1; i<=maxResolution; i++) {
+                hexCell_PixelsInfo.Add(new HexagonCellPixels(i, HexagonCellPixelsByResolution(i)));
+            }
+
+            IOUtil.ExportDataByJson(hexCell_PixelsInfo, "Config/HexCellPixelsInfo.json");
+
+            /*
+            List<HexCell_InfoByRank> hexCell_InfosByRank = new List<HexCell_InfoByRank>();
+
+            for (int r = 1; r <= maxRank; r++) {
+                List<HexCell_Info> hexCell_Infos = new List<HexCell_Info>();
+                var cellTuples = GenerateHexCellCentorPosList(r);
+
+                foreach (var t in cellTuples) {
+                    hexCell_Infos.Add(new HexCell_Info(t.hexIdx, t.centerPos));
+                }
+
+                hexCell_InfosByRank.Add(new HexCell_InfoByRank(r, hexCell_Infos));
+            }
+
+            IOUtil.ExportDataByJson(hexCell_InfosByRank, "Config/HexCellCenterPosInfo.json");
+            */
+        }
+
+        private static bool[] HexagonCellPixelsByResolution(int resolution)
+        {
+            int numPixels = 56 * (int)Mathf.Pow(resolution, 2);
+
+            bool[] pixels = new bool[numPixels];
+
+            for(int i=0; i < numPixels; i++) {
+                pixels[i] = InHexagon(i, resolution);
+            }
+
+            return pixels;
+        }
+
+        private static bool InHexagon(int cell_Idx, int resolution)
+        {
+            int width = resolution * 7;
+            int height = resolution * 8;
+
+            float x = cell_Idx % width + 0.5f;
+            float y = (cell_Idx / width) + 0.5f;
+
+            bool func1 = y < 4.0f / 7.0f * x + 6 * resolution;
+            bool func2 = y < -4.0f / 7.0f * x + 10 * resolution;
+            bool func3 = y > -4.0f / 7.0f * x + 2 * resolution;
+            bool func4 = y > 4.0f / 7.0f * x - 2 * resolution;
+
+            return func1 && func2 && func3 && func4;
         }
     }
 }

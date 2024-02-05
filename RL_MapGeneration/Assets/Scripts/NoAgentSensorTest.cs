@@ -17,22 +17,51 @@ public class NoAgentSensorTest : MonoBehaviour
         foreach (var mInfo in mInfos)
             sensorComp.ChannelLabels.Add(new ChannelLabel(mInfo.name, mInfo.color));
 
-        m_SensorBuffer = new ColorHexagonBuffer(sensorComp.ChannelLabels.Count, 6);
+        m_SensorBuffer = new ColorHexagonBuffer(sensorComp.ChannelLabels.Count, 9);
         sensorComp.HexagonBuffer = m_SensorBuffer;
 
-        for(int i=0; i<64; i++) {
-            sensorComp.HexagonBuffer.Write(0, i, 1);
+        sensorComp.HexagonBuffer.Write(0, 0, 1);
+
+        int r = 0;
+
+        // Rank 2
+        for (r = 1; r <= 6; r++) {
+            sensorComp.HexagonBuffer.Write(1, r, 2);
         }
 
-        /*
-        sensorComp.HexagonBuffer.Write(0, 0, 1);
-        sensorComp.HexagonBuffer.Write(1, 2, 2);
-        sensorComp.HexagonBuffer.Write(2, 4, 3);
-        sensorComp.HexagonBuffer.Write(3, 6, 4);       
-        sensorComp.HexagonBuffer.Write(4, 8, 5);
-        sensorComp.HexagonBuffer.Write(5, 10, 6);
-        sensorComp.HexagonBuffer.Write(6, 12, 7);
-        sensorComp.HexagonBuffer.Write(7, 14, 8);
-        */
+        // Rank 3
+        for (r = 7; r <= 18; r++) {
+            sensorComp.HexagonBuffer.Write(2, r, 3);
+        }
+
+        // Rank 4
+        for (r = 19; r <= 36; r++) {
+            sensorComp.HexagonBuffer.Write(3, r, 4);
+        }
+
+        // Rank 5
+        for (r = 37; r <= 60; r++) {
+            sensorComp.HexagonBuffer.Write(4, r, 5);
+        }
+
+        // Rank 6
+        for (r = 61; r <= 90; r++) {
+            sensorComp.HexagonBuffer.Write(5, r, 6);
+        }
+
+        // Rank 7
+        for (r = 91; r <= 126; r++) {
+            sensorComp.HexagonBuffer.Write(6, r, 7);
+        }
+
+        // Rank 8
+        for (r = 127; r <= 168; r++) {
+            sensorComp.HexagonBuffer.Write(7, r, 8);
+        }
+
+        // Rank 9
+        for (r = 169; r <= 216; r++) {
+            sensorComp.HexagonBuffer.Write(1, r, 9);
+        }
     }
 }

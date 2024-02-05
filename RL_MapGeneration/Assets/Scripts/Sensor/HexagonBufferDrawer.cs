@@ -8,6 +8,7 @@ using System.Linq;
 using Unity.Collections;
 using Gyulari.HexSensor.Util;
 using TMPro;
+using JetBrains.Annotations;
 
 namespace Gyulari.HexSensor
 {
@@ -103,6 +104,12 @@ namespace Gyulari.HexSensor
         private Rect m_HexagonRect;
         private Rect m_FullRect;
         private bool[] m_DrawChannel;
+        private int maxDrawRank = 9;
+        private int pixelResolution = 16;
+
+        List<HexCell_InfoByRank> hexCellCenterPosInfo = IOUtil.ImportDataByJson<HexCell_InfoByRank>("Config/HexCellCenterPosInfo.json");
+        List<HexagonCellPixels> hexCellPixelsInfo = IOUtil.ImportDataByJson<HexagonCellPixels>("Config/HexCellPixelsInfo.json");
+        private bool[] hexCellPixels;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
@@ -136,8 +143,9 @@ namespace Gyulari.HexSensor
                 if (draw) {
                     // Rect ¿¬»ê
                     CalcRects(rect);
-                    var tSizeTuple = GetTextureSizeByRank(m_Target.Buffer.Rank, 16);
+                    var tSizeTuple = GetTextureSizeByRank(maxDrawRank, pixelResolution);
                     ValidateTexture(tSizeTuple.width, tSizeTuple.height);
+                    hexCellPixels = hexCellPixelsInfo[pixelResolution - 1].pixels;
 
                     if (m_Target.ChannelData.HasHexagonPositions) {
                         DrawGL(DrawBackground, DrawPartialGrid);
@@ -202,6 +210,7 @@ namespace Gyulari.HexSensor
         {
             int width = 7 * resolution * (2 * rank - 1);
             int height = 4 * resolution * (3 * rank - 1);
+
             return (width, height);
         }
 
@@ -285,15 +294,61 @@ namespace Gyulari.HexSensor
             for (int hIdx = 0; hIdx < h; hIdx++) {
                 for(int c = 0; c < n; c++) {
                     if (buffer.Read(c, hIdx) != 0)
+                        DrawHexCell(m_Pixels, hIdx, channelData.GetColor(c));
                         m_Pixels[hIdx] = channelData.GetColor(c);
                 }
             }
 
-            for(int i=0; i < 1500; i++) {
-                m_Pixels[i] = new Color(255f, 255f, 255f, 255f);
+            m_Texture.Apply();
+        }
+
+        private void DrawHexCell(NativeArray<Color32> pixels, int hIdx, Color channelColor)
+        {
+            int rank = GetRankFromHexIndex(hIdx);
+            int hexIdx_InRank = GetHexIndexInRank(rank, hIdx);
+            int originIdx = (int)(56f * pixelResolution + 48 * pixelResolution * 119 * pixelResolution);
+            int hexCell_OriginIdx = (int)(originIdx 
+                + (hexCellCenterPosInfo[rank-1].cell_Info[hexIdx_InRank].centerPos.x * pixelResolution)
+                + (hexCellCenterPosInfo[rank-1].cell_Info[hexIdx_InRank].centerPos.y * pixelResolution * 119 * pixelResolution));
+            // int hexCell_OriginIdx = (int)(59.5f * pixelResolution + hexCellCenterPosInfo[rank-1].cell_Info[hexIdx_InRank].centerPos.x * pixelResolution
+               //  + ((52 * pixelResolution + hexCellCenterPosInfo[rank-1].cell_Info[hexIdx_InRank].centerPos.y * pixelResolution) * 7 * pixelResolution) * 119 * pixelResolution);
+
+            for (int i=0; i < 8 * pixelResolution; i++) {
+                for(int j=0; j < 7 * pixelResolution; j++) {
+                    if (hexCellPixels[i * 7 * pixelResolution + j] == true)
+                        pixels[hexCell_OriginIdx + 119 * pixelResolution * i + j] = channelColor;
+                }
+            }
+        }
+
+        private int GetRankFromHexIndex(int hexIdx)
+        {
+            int targetRank = 1;
+
+            if(hexIdx == 0) {
+                return targetRank;
             }
 
-            m_Texture.Apply();
+            while(hexIdx > 0) {
+                hexIdx -= 6 * targetRank;
+                targetRank++;
+            }
+
+            return targetRank;
+        }
+
+        private int GetHexIndexInRank(int rank, int hIdx)
+        {
+            if (rank == 1)
+                return 0;
+
+            int hexNum_preRank = 1;
+
+            for(int i=1; i<rank-1; i++){
+                hexNum_preRank += i * 6;
+            }
+
+            return hIdx - hexNum_preRank;
         }
 
         /*
