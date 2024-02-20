@@ -12,7 +12,7 @@ public class HexCenterPosTest : MonoBehaviour
 
     private void Start()
     {
-        List<HexCell_InfoByRank> hccpi = IOUtil.ImportDataByJson<HexCell_InfoByRank>("Config/HexCellCenterPosInfo.json");
+        List<HexCell_CenterPosInfoByRank> hccpi = IOUtil.ImportDataByJson<HexCell_CenterPosInfoByRank>("Config/HexCellCenterPosInfo.json");
         List<MaterialInfo> mList = IOUtil.ImportDataByJson<MaterialInfo>("Config/MaterialInfos.json");
 
         int i = 0;

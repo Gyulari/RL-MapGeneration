@@ -12,7 +12,7 @@ public class HexCellPixelsTest : MonoBehaviour
 
     private void Start()
     {
-        List<HexagonCellPixels> hexCellPixelsInfo = IOUtil.ImportDataByJson<HexagonCellPixels>("Config/HexCellPixelsInfo.json");
+        List<HexCell_Pixels> hexCellPixelsInfo = IOUtil.ImportDataByJson<HexCell_Pixels>("Config/HexCellPixelsInfo.json");
 
         int width = resolution * 7;
 

@@ -238,7 +238,6 @@ namespace Gyulari.HexSensor
                 m_Debug_ChannelData = Debug_CreateChannelData();
                 m_HexagonSensor.UpdateEvent += m_Debug_HexagonBufferDrawer.OnSensorUpdate;
                 ((IDebugable)m_HexagonSensor.Encoder)?.SetDebugEnabled(true, m_Debug_ChannelData);
-                Debug.Log("DEBUG_SET DRAW HEXAGON BUFFER ENABLED (HexagonSensorComponentBase)");
                 m_Debug_HexagonBufferDrawer.Enable(this, m_Debug_ChannelData, m_HexagonBuffer);
             }
             else {
@@ -264,13 +263,11 @@ namespace Gyulari.HexSensor
         {
             // Create from settings.
             if (HasSensor && m_HexagonSensor.AutoDetectionEnabled) {
-                Debug.Log("CREATE FROM SETTINGS");
                 return DebugChannelData.FromSettings(m_HexagonSensor.Encoder.Settings);
             }
 
             // Create from labels provided via ChannelLabels property.
             if (m_ChannelLabels != null && m_ChannelLabels.Count > 0) {
-                Debug.Log("CREATE FROM LABELS");
                 return DebugChannelData.FromLabels(m_ChannelLabels);
             }
 

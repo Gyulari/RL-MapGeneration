@@ -104,12 +104,11 @@ namespace Gyulari.HexSensor
         private Rect m_HexagonRect;
         private Rect m_FullRect;
         private bool[] m_DrawChannel;
-        private int maxDrawRank = 9;
         private int pixelResolution = 16;
 
-        List<HexCell_InfoByRank> hexCellCenterPosInfo = IOUtil.ImportDataByJson<HexCell_InfoByRank>("Config/HexCellCenterPosInfo.json");
-        List<HexagonCellPixels> hexCellPixelsInfo = IOUtil.ImportDataByJson<HexagonCellPixels>("Config/HexCellPixelsInfo.json");
-        private bool[] hexCellPixels;
+        List<HexCell_CenterPosInfoByRank> hexCellCenterPosInfo = IOUtil.ImportDataByJson<HexCell_CenterPosInfoByRank>("Config/HexCellCenterPosInfo.json");
+        List<HexCell_Pixels> hexCellPixelsInfo = IOUtil.ImportDataByJson<HexCell_Pixels>("Config/HexCellPixelsInfo.json");
+        private bool[] m_HexCell_Pixels;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
@@ -143,12 +142,13 @@ namespace Gyulari.HexSensor
                 if (draw) {
                     // Rect ¿¬»ê
                     CalcRects(rect);
-                    var tSizeTuple = GetTextureSizeByRank(maxDrawRank, pixelResolution);
-                    ValidateTexture(tSizeTuple.width, tSizeTuple.height);
-                    hexCellPixels = hexCellPixelsInfo[pixelResolution - 1].pixels;
+                    // var tSizeTuple = GetTextureSizeByRank(m_Target.Buffer.Rank, pixelResolution);
+                    var (width, height) = GetTextureSizeByRank(m_Target.Buffer.Rank, pixelResolution);
+                    ValidateTexture(width, height);
+                    m_HexCell_Pixels = hexCellPixelsInfo[pixelResolution - 1].pixels;
 
                     if (m_Target.ChannelData.HasHexagonPositions) {
-                        DrawGL(DrawBackground, DrawPartialGrid);
+                        // DrawGL(DrawBackground, DrawPartialGrid);
                     }
                     else {
                         DrawGL(DrawBackground, DrawFullGrid);
@@ -250,6 +250,7 @@ namespace Gyulari.HexSensor
             GL.End();
         }
 
+        /*
         private void DrawPartialGrid()
         {
             var channelData = m_Target.ChannelData;
@@ -280,30 +281,58 @@ namespace Gyulari.HexSensor
 
             m_Texture.Apply();
         }
+        */
 
         private void DrawFullGrid()
         {
             var channelData = m_Target.ChannelData;
             var buffer = m_Target.Buffer;
-            var n = buffer.NumChannels;
-            var r = buffer.Rank;
-            var h = buffer.GetMaxHexCount(r);
+            var numChannels = buffer.NumChannels;
+            var maxRank = buffer.Rank;
+            var h = buffer.GetMaxHexCount(maxRank);
 
             m_Pixels.CopyFrom(m_Black);
 
-            for (int hIdx = 0; hIdx < h; hIdx++) {
-                for(int c = 0; c < n; c++) {
-                    if (buffer.Read(c, hIdx) != 0)
-                        DrawHexCell(m_Pixels, hIdx, channelData.GetColor(c));
-                        m_Pixels[hIdx] = channelData.GetColor(c);
+            for(int hIdx = 0; hIdx < h; hIdx++) {
+                for(int c = 0; c < numChannels; c++) {
+                    if(buffer.Read(c, hIdx) != 0 && m_DrawChannel[c]) {
+                        DrawHexCell(m_Pixels, hIdx, channelData.GetColor(c), maxRank);
+                        // m_Pixels[hIdx] = channelData.GetColor(c);
+                    }
                 }
             }
 
             m_Texture.Apply();
         }
 
-        private void DrawHexCell(NativeArray<Color32> pixels, int hIdx, Color channelColor)
+        private void DrawHexCell(NativeArray<Color32> pixels, int hIdx, Color channelColor, int maxRank)
         {
+            int cellRank = GetRankFromHexIndex(hIdx);
+            int idxInRank = GetIndexInRank(cellRank, hIdx);
+            // 7(rank-1)k + 6(rank-1)k x 7(2rank-1)k, k = pixelResolution
+            // pixel 1D array Áß Áß¾Ó ¼¿ÀÇ ÁÂÇÏ´Ü Ã¹ ¹øÂ° ÇÈ¼¿ÀÇ index
+            int originIdx = 7 * (maxRank - 1) * pixelResolution + (m_Texture.height / 2 - 4 * pixelResolution) * m_Texture.width;
+            int cellOriginIdx = (int)(originIdx
+                + hexCellCenterPosInfo[cellRank - 1].cell_Info[idxInRank].centerPos.x * pixelResolution
+                + hexCellCenterPosInfo[cellRank - 1].cell_Info[idxInRank].centerPos.y * pixelResolution * m_Texture.width);
+
+            for (int i = 0; i < 8 * pixelResolution; i++) {
+                for (int j = 0; j < 7 * pixelResolution; j++) {
+                    if (m_HexCell_Pixels[i * 7 * pixelResolution + j])
+                        pixels[cellOriginIdx + m_Texture.width * i + j] = channelColor;
+                }
+            }
+
+            /*
+            for(int i=0; i < (maxRank-1) * pixelResolution; i++) {
+                for(int j=0; j < (maxRank-2) * pixelResolution; j++) {
+                    if (m_HexCell_Pixels[i * 7 * pixelResolution + j])
+                        pixels[cellOriginIdx + 119 * pixelResolution * i + j] = channelColor;
+                }
+            }
+            */
+
+            /*
             int rank = GetRankFromHexIndex(hIdx);
             int hexIdx_InRank = GetHexIndexInRank(rank, hIdx);
             int originIdx = (int)(56f * pixelResolution + 48 * pixelResolution * 119 * pixelResolution);
@@ -315,10 +344,11 @@ namespace Gyulari.HexSensor
 
             for (int i=0; i < 8 * pixelResolution; i++) {
                 for(int j=0; j < 7 * pixelResolution; j++) {
-                    if (hexCellPixels[i * 7 * pixelResolution + j] == true)
+                    if (m_HexCell_Pixels[i * 7 * pixelResolution + j] == true)
                         pixels[hexCell_OriginIdx + 119 * pixelResolution * i + j] = channelColor;
                 }
             }
+            */
         }
 
         private int GetRankFromHexIndex(int hexIdx)
@@ -337,7 +367,7 @@ namespace Gyulari.HexSensor
             return targetRank;
         }
 
-        private int GetHexIndexInRank(int rank, int hIdx)
+        private int GetIndexInRank(int rank, int hIdx)
         {
             if (rank == 1)
                 return 0;
