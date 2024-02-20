@@ -4,7 +4,6 @@ using Unity.MLAgents;
 using UnityEngine;
 using Gyulari.HexSensor;
 using Gyulari.HexSensor.Util;
-using Mono.Cecil;
 
 public class TestAgent : Agent
 {

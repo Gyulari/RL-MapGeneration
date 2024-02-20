@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using Unity.MLAgents;
 using NaughtyAttributes;
+using Gyulari.HexSensor.Util;
 
 namespace Gyulari.HexSensor
 {
