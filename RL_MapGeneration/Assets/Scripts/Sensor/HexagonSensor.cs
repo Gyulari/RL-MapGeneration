@@ -68,10 +68,11 @@ public class HexagonSensor : ISensor, IDisposable
     {
         DestroyTexture();
 
+        // 텍스처 크기가 지금 217로 되어있는데 여기서는 217x217으로 접근하기 때문으로 보임, 텍스처 크기를 grid format 변환할때처럼 기반으로 해서 수정해야할듯
         if(m_CompressionType == SensorCompressionType.PNG) {
             m_PerceptionTexture = new Texture2D(
                 m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank), m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank), TextureFormat.RGB24, false);
-            
+
             m_CompressedObs = new List<byte>(
                 m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank) * m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank) * m_HexagonBuffer.NumChannels);
         }

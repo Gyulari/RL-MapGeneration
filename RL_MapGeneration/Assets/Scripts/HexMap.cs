@@ -11,10 +11,47 @@ namespace Gyulari.HexMapGeneration
 {
     public class HexMap : MonoBehaviour
     {
-        List<ChannelLabel> channelLabels = new List<ChannelLabel>();
+        struct Node
+        {
+            public int channel;
+            public int link;
+
+            public Node(int channel, int link)
+            {
+                this.channel = channel;
+                this.link = link;
+            }
+        }
+
+        public const int NumChannels = 8;
+        public const int maxRank = 9;
+
+        public List<GameObject> tiles;
+        public List<HexCell_CenterPosInfoByRank> hexCellCenterPosInfo;
+
+        public HexagonBuffer Buffer;
+
+        public void AddTileNode(int hexIdx, int channel, int link)
+        {
+            Node node = new Node(channel, link);
+
+            Buffer.Write(channel, hexIdx, link);
+
+            var rank = CalHexPropertyUtil.GetRankByHexIdx(hexIdx);
+            var hexNumInRank = CalHexPropertyUtil.GetHexNumberInRank(rank, hexIdx);
+
+            Instantiate(tiles[channel],
+                new Vector3(hexCellCenterPosInfo[rank].cell_Info[hexNumInRank - 1].centerPos.x / 10.0f,
+                            0.05f,
+                            hexCellCenterPosInfo[rank].cell_Info[hexNumInRank - 1].centerPos.y / 10.0f),
+                Quaternion.Euler(90f, 30f, 0f));
+        }
+
+        /*
+        public List<ChannelLabel> channelLabels = new List<ChannelLabel>();
         List<MaterialInfo> mInfos = IOUtil.ImportDataByJson<MaterialInfo>("Config/MaterialInfos.json");
 
-        public int NumChannels;
+        public const int NumChannels = 8;
 
         public HexagonBuffer Buffer;
 
@@ -40,7 +77,7 @@ namespace Gyulari.HexMapGeneration
             string dirPath = "Assets/Prefabs/Tiles";
 
             if (Directory.Exists(dirPath)) {
-                string[] guids = AssetDatabase.FindAssets("t:Prefab Asset", new string[] { dirPath });
+                string[] guids = AssetDatabase.FindAssets("t:GameObject", new string[] { dirPath });
 
                 if(guids.Length != 0) {
                     foreach(var g in guids) {
@@ -57,5 +94,6 @@ namespace Gyulari.HexMapGeneration
                 Debug.LogWarning("Directory for generating hexagon tile list does not exist. Please create the \"Asset/Prefabs/Tiles\" directory.");
             }
         }
+        */
     }
 }
