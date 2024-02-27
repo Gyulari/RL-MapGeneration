@@ -26,12 +26,12 @@ public class NoAgentSensorTest : MonoBehaviour
 
         // Rank 2
         for (r = 1; r <= 6; r++) {
-            sensorComp.HexagonBuffer.Write(1, r, 2);
+            sensorComp.HexagonBuffer.Write(0, r, 2);
         }
         
         // Rank 3
         for (r = 7; r <= 18; r++) {
-            sensorComp.HexagonBuffer.Write(2, r, 3);
+            sensorComp.HexagonBuffer.Write(0, r, 3);
         }
         /*
         // Rank 4

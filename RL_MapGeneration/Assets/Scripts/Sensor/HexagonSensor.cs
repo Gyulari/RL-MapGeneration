@@ -6,6 +6,7 @@ using System;
 using UnityEngine.AI;
 using Unity.MLAgents;
 using Grpc.Core;
+using System.Linq.Expressions;
 
 public class HexagonSensor : ISensor, IDisposable
 {
@@ -45,8 +46,11 @@ public class HexagonSensor : ISensor, IDisposable
         HandleCompressionType();
 
         m_ObservationSpec = new ObservationSpec(
-            new InplaceArray<int>(m_HexagonBuffer.Rank, m_HexagonBuffer.NumChannels),
+            new InplaceArray<int>(m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank),
+                                  m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank),
+                                  m_HexagonBuffer.NumChannels),
             new InplaceArray<DimensionProperty>(
+                DimensionProperty.TranslationalEquivariance,
                 DimensionProperty.TranslationalEquivariance,
                 DimensionProperty.None),
             observationType
@@ -62,15 +66,14 @@ public class HexagonSensor : ISensor, IDisposable
 
     protected void HandleCompressionType()
     {
-        // 어떻게 hexagon 방식으로 적용할건지 여기서 고민 좀
-
         DestroyTexture();
 
         if(m_CompressionType == SensorCompressionType.PNG) {
             m_PerceptionTexture = new Texture2D(
-                m_HexagonBuffer.Rank, m_HexagonBuffer.Rank, TextureFormat.RGB24, false);
+                m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank), m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank), TextureFormat.RGB24, false);
+            
             m_CompressedObs = new List<byte>(
-                m_HexagonBuffer.Rank * m_HexagonBuffer.Rank * m_HexagonBuffer.NumChannels);
+                m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank) * m_HexagonBuffer.GetMaxHexCount(m_HexagonBuffer.Rank) * m_HexagonBuffer.NumChannels);
         }
     }
 
@@ -105,10 +108,16 @@ public class HexagonSensor : ISensor, IDisposable
     public int Write(ObservationWriter writer)
     {
         int numWritten = 0;
-        int r = m_HexagonBuffer.Rank;
-        int n = m_HexagonBuffer.NumChannels;
-
-        // write for loop
+        int rank = m_HexagonBuffer.Rank;
+        int numChannels = m_HexagonBuffer.NumChannels;
+        int maxHexNum = m_HexagonBuffer.GetMaxHexCount(rank);
+        
+        for(int c = 0; c < numChannels; c++) {
+            for(int h = 0; h < maxHexNum; h++) {
+                writer[h, h, c] = m_HexagonBuffer.Read(c, h);
+                numWritten++;
+            }
+        }
 
         return numWritten;
     }
