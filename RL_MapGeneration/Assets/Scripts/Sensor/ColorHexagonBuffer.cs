@@ -21,10 +21,10 @@ public class ColorHexagonBuffer : HexagonBuffer
         m_Colors = new Color32[m_NumLayers][];
 
         for (int i = 0; i < m_NumLayers; i++) {
-            m_Colors[i] = new Color32[GetMaxHexCount(Rank)];
+            m_Colors[i] = new Color32[GetTextureSizeByRank().width * GetTextureSizeByRank().height];
         }
 
-        c_Black = Enumerable.Repeat(new Color32(0, 0, 0, 255), GetMaxHexCount(Rank)).ToArray();
+        c_Black = Enumerable.Repeat(new Color32(0, 0, 0, 255), GetTextureSizeByRank().width * GetTextureSizeByRank().height).ToArray();
         ClearColors();
     }
 
@@ -104,5 +104,13 @@ public class ColorHexagonBuffer : HexagonBuffer
         for (int i = 0, n = m_Colors[layer].Length; i < n; i++) {
             m_Colors[layer][i][color] = 0;
         }
+    }
+
+    private (int width, int height) GetTextureSizeByRank()
+    {
+        int width = 7 * 16 * (2 * Rank - 1);
+        int height = 4 * 16 * (3 * Rank - 1);
+
+        return (width, height);
     }
 }

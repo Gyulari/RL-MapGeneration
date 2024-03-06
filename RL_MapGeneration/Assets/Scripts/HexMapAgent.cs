@@ -52,8 +52,14 @@ namespace Gyulari.HexMapGeneration
                 return;
             }
 
-            m_HexMap.AddTileNode(curHexIdx, channelAction, link);
+            // m_HexMap.AddTileNode(curHexIdx, channelAction, link);
+            m_HexMap.AddTileNode(curHexIdx, channelAction, 1);
             curHexIdx++;
+        }
+
+        public void AddNodeToSensorBuffer(int hIdx, int channel, int link)
+        {
+            m_SensorBuffer.Write(channel, hIdx, link);
         }
 
         /*

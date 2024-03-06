@@ -6,6 +6,7 @@ using Gyulari.HexSensor.Util;
 using UnityEngine.Diagnostics;
 using UnityEditor;
 using System.IO;
+using System;
 
 namespace Gyulari.HexMapGeneration
 {
@@ -26,24 +27,27 @@ namespace Gyulari.HexMapGeneration
         public const int NumChannels = 8;
         public const int maxRank = 9;
 
+        public HexMapAgent agent;
         public List<GameObject> tiles;
         public List<HexCell_CenterPosInfoByRank> hexCellCenterPosInfo;
 
         public HexagonBuffer Buffer;
 
+
         public void AddTileNode(int hexIdx, int channel, int link)
         {
             Node node = new Node(channel, link);
 
-            Buffer.Write(channel, hexIdx, link);
+            // Buffer.Write(channel, hexIdx, link);
+            agent.AddNodeToSensorBuffer(hexIdx, node.channel, node.link);
 
             var rank = CalHexPropertyUtil.GetRankByHexIdx(hexIdx);
             var hexNumInRank = CalHexPropertyUtil.GetHexNumberInRank(rank, hexIdx);
 
             Instantiate(tiles[channel],
-                new Vector3(hexCellCenterPosInfo[rank].cell_Info[hexNumInRank - 1].centerPos.x / 10.0f,
+                new Vector3(hexCellCenterPosInfo[rank-1].cell_Info[hexNumInRank].centerPos.x / 10.0f,
                             0.05f,
-                            hexCellCenterPosInfo[rank].cell_Info[hexNumInRank - 1].centerPos.y / 10.0f),
+                            hexCellCenterPosInfo[rank-1].cell_Info[hexNumInRank].centerPos.y / 10.0f),
                 Quaternion.Euler(90f, 30f, 0f));
         }
 

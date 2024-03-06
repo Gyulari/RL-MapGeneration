@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Start Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: a6b599c2f1522374abf88d53d30e5ee8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: a6b599c2f1522374abf88d53d30e5ee8, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -200,6 +204,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_Name
       value: Enemy Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_RootOrder
@@ -267,6 +275,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Teleport Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -333,6 +345,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Teleport Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -398,6 +414,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_Name
       value: Teleport Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_RootOrder
@@ -467,7 +487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149354441612522819, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_RootOrder
@@ -543,6 +563,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Teleport Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -608,6 +632,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_Name
       value: Enemy Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_RootOrder
@@ -781,6 +809,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -847,6 +879,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -912,6 +948,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: 9cee117a744d2554e91cfb4a82402468, type: 3}
       propertyPath: m_Name
       value: Generation Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 9cee117a744d2554e91cfb4a82402468, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 9cee117a744d2554e91cfb4a82402468, type: 3}
       propertyPath: m_RootOrder
@@ -1031,6 +1071,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Breakable Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 30d75e2c8d6b20045b5663fc595b781c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 30d75e2c8d6b20045b5663fc595b781c, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1099,7 +1143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149354441612522819, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_RootOrder
@@ -1177,7 +1221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149354441612522819, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_RootOrder
@@ -1253,6 +1297,7 @@ GameObject:
   - component: {fileID: 1063611355}
   - component: {fileID: 1063611354}
   - component: {fileID: 1063611357}
+  - component: {fileID: 1063611358}
   m_Layer: 0
   m_Name: HexMapAgent
   m_TagString: Untagged
@@ -1290,12 +1335,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 0
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 080000000a000000
-    VectorActionSize: 080000000a000000
+      BranchSizes: 070000000a000000
+    VectorActionSize: 070000000a000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
@@ -1352,6 +1397,20 @@ MonoBehaviour:
   m_HexagonShape:
     NumChannels: 1
     Rank: 6
+--- !u!114 &1063611358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063611353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 1
 --- !u!1001 &1184838134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1366,7 +1425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149354441612522819, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_RootOrder
@@ -1441,6 +1500,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_Name
       value: Enemy Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_RootOrder
@@ -1554,6 +1617,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1619,6 +1686,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_Name
       value: Teleport Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_RootOrder
@@ -1686,6 +1757,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Generated Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: eca667b5278879b4fbad0bec0f7294f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: eca667b5278879b4fbad0bec0f7294f9, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1752,6 +1827,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Teleport Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1817,6 +1896,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: a6b599c2f1522374abf88d53d30e5ee8, type: 3}
       propertyPath: m_Name
       value: Start Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: a6b599c2f1522374abf88d53d30e5ee8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: a6b599c2f1522374abf88d53d30e5ee8, type: 3}
       propertyPath: m_RootOrder
@@ -1959,6 +2042,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: f30af6ac62510214d9f74f1e94350dd2, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2024,6 +2111,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_Name
       value: Teleport Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_RootOrder
@@ -2091,6 +2182,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Generation Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 9cee117a744d2554e91cfb4a82402468, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 9cee117a744d2554e91cfb4a82402468, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2156,6 +2251,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_Name
       value: Teleport Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 145853abd6dea1e45ad03e0aa3f408bf, type: 3}
       propertyPath: m_RootOrder
@@ -2223,6 +2322,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Generated Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: eca667b5278879b4fbad0bec0f7294f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: eca667b5278879b4fbad0bec0f7294f9, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2289,6 +2392,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Start Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: a6b599c2f1522374abf88d53d30e5ee8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: a6b599c2f1522374abf88d53d30e5ee8, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2354,6 +2461,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: 9cee117a744d2554e91cfb4a82402468, type: 3}
       propertyPath: m_Name
       value: Generation Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: 9cee117a744d2554e91cfb4a82402468, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 9cee117a744d2554e91cfb4a82402468, type: 3}
       propertyPath: m_RootOrder
@@ -2423,7 +2534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149354441612522819, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_RootOrder
@@ -2704,7 +2815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149354441612522819, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: 331bcc55a7503c349b0f242bc6301e5a, type: 3}
       propertyPath: m_RootOrder
@@ -2779,6 +2890,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: eca667b5278879b4fbad0bec0f7294f9, type: 3}
       propertyPath: m_Name
       value: Generated Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: eca667b5278879b4fbad0bec0f7294f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: eca667b5278879b4fbad0bec0f7294f9, type: 3}
       propertyPath: m_RootOrder
@@ -2955,6 +3070,10 @@ PrefabInstance:
     - target: {fileID: 149354441612522819, guid: b5a9154dba511c84da4fc976c33cc546, type: 3}
       propertyPath: m_Name
       value: Boss Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 149354441612522819, guid: b5a9154dba511c84da4fc976c33cc546, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8669296595801174612, guid: b5a9154dba511c84da4fc976c33cc546, type: 3}
       propertyPath: m_RootOrder

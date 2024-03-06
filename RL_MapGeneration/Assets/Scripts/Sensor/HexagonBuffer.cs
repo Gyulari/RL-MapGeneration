@@ -119,7 +119,7 @@ public class HexagonBuffer
     }
 
     public virtual float Read(int channel, int hexIdx)
-    {
+    {        
         return m_Values[channel][hexIdx];
     }
 
