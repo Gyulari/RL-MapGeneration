@@ -108,8 +108,8 @@ public class ColorHexagonBuffer : HexagonBuffer
 
     private (int width, int height) GetTextureSizeByRank()
     {
-        int width = 7 * 16 * (2 * Rank - 1);
-        int height = 4 * 16 * (3 * Rank - 1);
+        int width = 7 * 2 * (2 * Rank - 1);
+        int height = 4 * 2 * (3 * Rank - 1);
 
         return (width, height);
     }

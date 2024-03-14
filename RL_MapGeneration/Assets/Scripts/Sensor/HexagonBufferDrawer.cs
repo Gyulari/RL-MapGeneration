@@ -298,7 +298,7 @@ namespace Gyulari.HexSensor
                     // Draw Channel[c]는 channel label의 토글이 on 상태일 때 그릴지 말지 결정하는 것이지 채널별로 구별해주는 것이 아님
                     if (m_DrawChannel[c]) {
                         // 여기서 이번에 읽어들이는게 한 channel이도록 제한하지 않는 이상 마지막 채널의 색상으로 도배가 될 것임
-                        if(buffer.Read(c, hIdx) == 1) {
+                        if(buffer.Read(hIdx,c) == 1) {
                             DrawHexCell(m_Pixels, hIdx, channelData.GetColor(c), maxRank);
                         }
                         // m_Pixels[hIdx] = channelData.GetColor(c);

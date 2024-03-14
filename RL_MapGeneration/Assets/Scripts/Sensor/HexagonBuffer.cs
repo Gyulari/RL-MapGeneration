@@ -104,29 +104,29 @@ public class HexagonBuffer
         }
     }
 
-    public virtual void Write(int channel, int hexIdx, float value)
+    public virtual void Write(int hexIdx, int channel, float value)
     {
         m_Values[channel][hexIdx] = value;
     }
 
-    public virtual bool TryWrite(int channel, int hexIdx, float value)
+    public virtual bool TryWrite(int hexIdx, int channel, float value)
     {
         bool hasPosition = Contains(hexIdx);
         if (hasPosition) {
-            Write(channel, hexIdx, value);
+            Write(hexIdx, channel, value);
         }
         return hasPosition;
     }
 
-    public virtual float Read(int channel, int hexIdx)
+    public virtual float Read(int hexIdx, int channel)
     {        
         return m_Values[channel][hexIdx];
     }
 
-    public virtual bool TryRead(int channel, int hexIdx, out float value)
+    public virtual bool TryRead(int hexIdx, int channel, out float value)
     {
         bool hasPosition = Contains(hexIdx);
-        value = hasPosition ? Read(channel, hexIdx) : 0;
+        value = hasPosition ? Read(hexIdx, channel) : 0;
         return hasPosition;
     }
 

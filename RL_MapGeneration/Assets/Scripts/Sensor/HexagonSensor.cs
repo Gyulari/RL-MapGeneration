@@ -160,8 +160,8 @@ public class HexagonSensor : ISensor, IDisposable
 
     private (int width, int height) GetTextureSizeByRank()
     {
-        int width = 7 * 16 * (2 * m_HexagonBuffer.Rank - 1);
-        int height = 4 * 16 * (3 * m_HexagonBuffer.Rank - 1);
+        int width = 7 * 2 * (2 * m_HexagonBuffer.Rank - 1);
+        int height = 4 * 2 * (3 * m_HexagonBuffer.Rank - 1);
 
         return (width, height);
     }
