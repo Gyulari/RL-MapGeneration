@@ -1,5 +1,6 @@
 using UnityEngine;
 using Gyulari.HexSensor.Util;
+using Gyulari.HexSensor;
 
 namespace Gyulari.HexMapGeneration
 {

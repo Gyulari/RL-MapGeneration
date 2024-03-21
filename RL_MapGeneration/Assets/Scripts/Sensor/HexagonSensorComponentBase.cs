@@ -3,18 +3,17 @@ using Unity.MLAgents.Sensors;
 using System;
 using System.Collections.Generic;
 using System.Collections;
-using Unity.MLAgents;
 using NaughtyAttributes;
 using Gyulari.HexSensor.Util;
 
 namespace Gyulari.HexSensor
 {
-    // Abstract class for hexagon sensor component.
+    // Base class for HexagonSensorComponent
     public abstract class HexagonSensorComponentBase : SensorComponent, IDisposable
     {
-        // Information about channel and rank.
         [SerializeField, ReadOnly]
         private string m_ObservationShape;
+
 
         #region Sensor Settings
 
@@ -39,36 +38,19 @@ namespace Gyulari.HexSensor
         [Foldout("Basics")]
         private int m_ObservationStacks = 1;
 
-        // SensorCompressionType used by the sensor.
-        public SensorCompressionType CompressionType
-        {
-            get { return m_CompressionType; }
-            set { m_CompressionType = value; OnCompressionTypeChange(); }
-        }
-        [SerializeField]
-        [Foldout("Basics")]
-        private SensorCompressionType m_CompressionType = SensorCompressionType.PNG;
-
-        // CompressionType sync between sensor and sensor component.
-        private void OnCompressionTypeChange()
-        {
-            if (HasSensor) {
-                m_HexagonSensor.CompressionType = m_CompressionType;
-            }
-        }
-
         // ObservationType of the sensor.
-        // Note. Changing ObservationType after sensor is created has no effect.
         public ObservationType ObservationType
         {
             get { return m_ObservationType; }
             set { m_ObservationType = value; }
         }
-        [SerializeField]
         [Foldout("Basics")]
         private ObservationType m_ObservationType = ObservationType.Default;
 
         #endregion
+
+
+        #region Channel Label
 
         // ChannelLabel list.
         // Utilized for debugging only.
@@ -80,36 +62,12 @@ namespace Gyulari.HexSensor
         [SerializeField, HideInInspector]
         protected List<ChannelLabel> m_ChannelLabels;
 
+        #endregion
+
+
 #if (UNITY_EDITOR)
 
         #region Debug Settings
-
-        [SerializeField]
-        [EnableIf("IsNotPlaying")]
-        [Foldout("Debug")]
-        [Label("Auto-Create Sensor")]
-        [Tooltip("Option used to test stand-alone sensor component not attached to agent. " +
-            "When the option is selected, the component creates sensor in Awake().")]
-        private bool m_Debug_CreateSensorOnAwake;
-
-        [SerializeField]
-        [EnableIf(EConditionOperator.And, "IsNotPlaying", "m_Debug_CreateSensorOnAwake")]
-        [Foldout("Debug")]
-        [Label("Re-Initialize On Change")]
-        [Tooltip("Option used to immediately see the effect of settings updates that would otherwise not be changeable at runtime. " +
-            "When the option is selected, the component recreates sensor whenever the inspector settings change. " +
-            "Only available on auto-create sensor ." +
-            "Note. Scene GUI edits or tag changes will not trigger re-initialization and can result in erros.")]
-        private bool m_Debug_CreateSensorOnValidate = true;
-
-        [SerializeField]
-        [EnableIf("m_Debug_CreateSensorOnAwake")]
-        [Foldout("Debug")]
-        [Label("Update Interval")]
-        [Tooltip("FixedUpdate interval for auto-create sensor. ")]
-        [Range(1, 20)]
-        private int m_Debug_FrameInterval = 1;
-        private int m_Debug_FrameCount;
 
         [SerializeField]
         [OnValueChanged("Debug_ToggleDrawHexagonBuffer")]
@@ -120,8 +78,6 @@ namespace Gyulari.HexSensor
         private bool m_Debug_DrawHexagonBuffer;
         private bool m_Debug_DrawHexagonBufferEnabled;    // Flag for tracking 'Draw Hexagon Buffer' toggle state.
 
-        private bool IsNotPlaying => !Application.isPlaying;    // Inspector flag for NaughtyAttributes.
-
         [SerializeField]
         [ShowIf("m_Debug_DrawHexagonBuffer")]
         [Foldout("Debug")]
@@ -131,6 +87,7 @@ namespace Gyulari.HexSensor
         #endregion
 
 #endif
+
 
         #region Buffer and Shape
 
@@ -154,20 +111,6 @@ namespace Gyulari.HexSensor
         [SerializeField, HideInInspector]
         private HexagonBuffer.Shape m_HexagonShape = new HexagonBuffer.Shape(1, 6);
 
-        protected void UpdateHexagonChannelCount(int numChannels)
-        {
-            var shape = HexagonShape;
-            shape.NumChannels = numChannels;
-            HexagonShape = shape;
-        }
-
-        protected void UpdateHexagonSize(int rank)
-        {
-            var shape = HexagonShape;
-            shape.Rank = rank;
-            HexagonShape = shape;
-        }
-
         // Update information about channel and rank to inspector.
         private void UpdateObservationShapeInfo()
         {
@@ -175,17 +118,11 @@ namespace Gyulari.HexSensor
                         m_HexagonShape.NumChannels,
                         m_HexagonShape.NumChannels == 1 ? "" : "s",
                         m_HexagonShape.Rank);
-        }
+        }        
 
         #endregion
 
-        // Whether the HexagonSensor was created.
-        public bool HasSensor
-        {
-            get { return m_HexagonSensor != null; }
-        }
 
-        // HexagonSensor instance.
         public HexagonSensor HexagonSensor
         {
             get { return m_HexagonSensor; }
@@ -204,7 +141,14 @@ namespace Gyulari.HexSensor
             }
 #endif
 
-            m_HexagonSensor = new HexagonSensor(m_SensorName, m_HexagonBuffer, m_CompressionType, m_ObservationType);
+            // Maximum number of observable objects : Maximum number of tiles in HexMap with its maximum rank
+            // Size of observations for each hexagon tile : 2 (Channel, Link)
+            m_HexagonSensor = new HexagonSensor(
+                m_SensorName,
+                m_HexagonBuffer, 
+                CalHexPropertyUtil.GetMaxHexCount(m_HexagonBuffer.Rank), 
+                2, 
+                m_ObservationType);
 
             if (ObservationStacks > 1) {
                 return new ISensor[]
@@ -215,6 +159,7 @@ namespace Gyulari.HexSensor
 
             return new ISensor[] { m_HexagonSensor };
         }
+
 #if (UNITY_EDITOR)
 
         private IEnumerator m_Debug_OnSensorCreated;
@@ -225,28 +170,23 @@ namespace Gyulari.HexSensor
         private void Debug_ToggleDrawHexagonBuffer()
         {
             if (Debug_HasRuntimeSensor()) {
-                if (m_Debug_DrawHexagonBuffer != m_Debug_DrawHexagonBufferEnabled) {
+                if(m_Debug_DrawHexagonBuffer != m_Debug_DrawHexagonBufferEnabled) {
                     Debug_SetDrawHexagonBufferEnabled(m_Debug_DrawHexagonBuffer);
                 }
             }
         }
 
+        // Enable or disable DrawHexagonBuffer
         private void Debug_SetDrawHexagonBufferEnabled(bool enabled, bool standby = false)
         {
             if (enabled) {
                 m_Debug_ChannelData?.Dispose();
                 m_Debug_ChannelData = Debug_CreateChannelData();
-                m_HexagonSensor.UpdateEvent += m_Debug_HexagonBufferDrawer.OnSensorUpdate;
-                ((IDebugable)m_HexagonSensor.Encoder)?.SetDebugEnabled(true, m_Debug_ChannelData);
                 m_Debug_HexagonBufferDrawer.Enable(this, m_Debug_ChannelData, m_HexagonBuffer);
             }
             else {
                 m_Debug_ChannelData?.Dispose();
 
-                if (Debug_HasRuntimeSensor()) {
-                    m_HexagonSensor.UpdateEvent -= m_Debug_HexagonBufferDrawer.OnSensorUpdate;
-                    ((IDebugable)m_HexagonSensor.Encoder)?.SetDebugEnabled(false);
-                }
 
                 if (standby) {
                     m_Debug_HexagonBufferDrawer.Standby();
@@ -259,13 +199,10 @@ namespace Gyulari.HexSensor
             m_Debug_DrawHexagonBufferEnabled = enabled;
         }
 
+        // Create channel data to output in debug window
+        // If ChannelLabels is not provided, fallback channel labels are created
         private DebugChannelData Debug_CreateChannelData()
         {
-            // Create from settings.
-            if (HasSensor && m_HexagonSensor.AutoDetectionEnabled) {
-                return DebugChannelData.FromSettings(m_HexagonSensor.Encoder.Settings);
-            }
-
             // Create from labels provided via ChannelLabels property.
             if (m_ChannelLabels != null && m_ChannelLabels.Count > 0) {
                 return DebugChannelData.FromLabels(m_ChannelLabels);
@@ -284,55 +221,10 @@ namespace Gyulari.HexSensor
             return DebugChannelData.FromLabels(labels, false);
         }
 
-
-        // Standalone sensor component.
-        private void Debug_CreateSensorOnAwake()
+        // Whether the HexagonSensor was created
+        public bool HasSensor
         {
-            var agent = GetComponentInParent<Agent>();
-
-            if (m_Debug_CreateSensorOnAwake) {
-                if (agent != null) {
-                    Debug.LogWarning("'Auto-Create Sensor' was selected, but this component is " +
-                        $"attached to agent '{agent.name}'. The option is being disabled.");
-
-                    m_Debug_CreateSensorOnAwake = false;
-                }
-                else {
-                    if (!m_Debug_CreateSensorOnValidate) {
-                        Debug.LogWarning("Sensor might not react properly or or throw errors " +
-                            "when inspector values change. You can select 'Debug > Re-Initialize " +
-                            "On Change' to always refresh the sensor.");
-                    }
-
-                    CreateSensors();
-                }
-            }
-            else if (agent == null) {
-                Debug.LogWarning("No agent was found on this or a parent gameobject. " +
-                    "You can select 'Debug > Auto-Create Sensor' to create a standalone sensor.");
-            }
-        }
-
-        private void Debug_CreateSensorOnValidate()
-        {
-            if (Debug_HasRuntimeSensor() && m_Debug_CreateSensorOnAwake && m_Debug_CreateSensorOnValidate) {
-                // Debug hexagon drawer standby during sensor refresh.
-                Debug_SetDrawHexagonBufferEnabled(false, true);
-
-                CreateSensors();
-                m_Debug_FrameCount = 0;
-            }
-        }
-
-        private void Debug_UpdateSensor()
-        {
-            if (m_Debug_CreateSensorOnAwake) {
-                if (m_Debug_FrameCount % m_Debug_FrameInterval == 0) {
-                    // We ignore the StackingSensor for debug options.
-                    m_HexagonSensor.Update();
-                }
-                m_Debug_FrameCount++;
-            }
+            get { return m_HexagonSensor != null; }
         }
 
         private bool Debug_HasRuntimeSensor()
@@ -340,28 +232,13 @@ namespace Gyulari.HexSensor
             return Application.isPlaying && HasSensor;
         }
 
-
         private void Awake()
         {
             m_Debug_HexagonBufferDrawer.Disable();
-            Debug_CreateSensorOnAwake();
         }
-
-        private void OnValidate()
-        {
-            if (Application.isPlaying) {
-                Debug_CreateSensorOnValidate();
-            }
-            else {
-                HandleValidate();
-            }
-        }
-
-        protected virtual void HandleValidate() { }
 
         private void FixedUpdate()
         {
-            Debug_UpdateSensor();
         }
 
         private void OnApplicationQuit()

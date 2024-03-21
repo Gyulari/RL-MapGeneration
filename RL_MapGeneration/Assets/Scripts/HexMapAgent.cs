@@ -4,6 +4,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using System;
 using Gyulari.HexSensor.Util;
+using UnityEngine;
 
 namespace Gyulari.HexMapGeneration
 {

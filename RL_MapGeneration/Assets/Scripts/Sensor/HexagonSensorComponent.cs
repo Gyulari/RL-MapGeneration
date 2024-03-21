@@ -2,7 +2,7 @@ using Unity.MLAgents.Sensors;
 
 namespace Gyulari.HexSensor
 {
-    // Implementation of a Hexagon Sensor Compoennt
+    // Implementation of a HexagonSensorCompoennt
     public class HexagonSensorComponent : HexagonSensorComponentBase
     {
         public override ISensor[] CreateSensors()

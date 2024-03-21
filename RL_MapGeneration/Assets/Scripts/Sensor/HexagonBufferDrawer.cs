@@ -104,7 +104,7 @@ namespace Gyulari.HexSensor
         private Rect m_HexagonRect;
         private Rect m_FullRect;
         private bool[] m_DrawChannel;
-        private int pixelResolution = 16;
+        private int pixelResolution = 2;
 
         List<HexCell_CenterPosInfoByRank> hexCellCenterPosInfo = IOUtil.ImportDataByJson<HexCell_CenterPosInfoByRank>("Config/HexCellCenterPosInfo.json");
         List<HexCell_Pixels> hexCellPixelsInfo = IOUtil.ImportDataByJson<HexCell_Pixels>("Config/HexCellPixelsInfo.json");
@@ -289,7 +289,7 @@ namespace Gyulari.HexSensor
             var buffer = m_Target.Buffer;
             var numChannels = buffer.NumChannels;
             var maxRank = buffer.Rank;
-            var h = buffer.GetMaxHexCount(maxRank);
+            var h = CalHexPropertyUtil.GetMaxHexCount(maxRank);
 
             m_Pixels.CopyFrom(m_Black);
 

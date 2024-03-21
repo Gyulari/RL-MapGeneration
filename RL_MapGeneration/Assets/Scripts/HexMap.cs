@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Gyulari.HexSensor.Util;
+using Gyulari.HexSensor;
 using UnityEditor;
 using System.IO;
 
@@ -8,7 +9,7 @@ namespace Gyulari.HexMapGeneration
 {
     public class HexMap : MonoBehaviour
     {
-        public const int NumChannels = 8;
+        public const int NumChannels = 9;
 
         public List<GameObject> m_Tiles;
         public List<HexCell_CenterPosInfoByRank> m_CellPosList;
