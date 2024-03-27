@@ -19,7 +19,6 @@ namespace Gyulari.HexSensor
         public HexagonBuffer Buffer;
         public MonoBehaviour Context;
         public Editor Editor;
-        // public float HexagonSizeRatio;
         public bool IsEnabled;
         public bool IsStandby;
 
@@ -32,7 +31,6 @@ namespace Gyulari.HexSensor
         {
             ChannelData = channelData;
             Buffer = buffer;
-            // HexagonSizeRatio = buffer.Rank / (float)buffer.Rank;
 
             Context = context;
             m_RepaintOnFirstUpdate = true;
@@ -110,10 +108,12 @@ namespace Gyulari.HexSensor
         List<HexCell_Pixels> hexCellPixelsInfo = IOUtil.ImportDataByJson<HexCell_Pixels>("Config/HexCellPixelsInfo.json");
         private bool[] m_HexCell_Pixels;
 
+        /*
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return m_FullRect.height;
         }
+        */
 
         public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
         {
@@ -147,12 +147,7 @@ namespace Gyulari.HexSensor
                     ValidateTexture(width, height);
                     m_HexCell_Pixels = hexCellPixelsInfo[pixelResolution - 1].pixels;
 
-                    if (m_Target.ChannelData.HasHexagonPositions) {
-                        // DrawGL(DrawBackground, DrawPartialGrid);
-                    }
-                    else {
-                        DrawGL(DrawBackground, DrawFullGrid);
-                    }
+                    DrawGL(DrawBackground, DrawFullGrid);
 
                     EditorGUI.DrawPreviewTexture(m_HexagonRect, m_Texture);
                 }
@@ -297,10 +292,16 @@ namespace Gyulari.HexSensor
                 for(int c = 0; c < numChannels; c++) {
                     // Draw Channel[c]는 channel label의 토글이 on 상태일 때 그릴지 말지 결정하는 것이지 채널별로 구별해주는 것이 아님
                     if (m_DrawChannel[c]) {
-                        // 여기서 이번에 읽어들이는게 한 channel이도록 제한하지 않는 이상 마지막 채널의 색상으로 도배가 될 것임
-                        if(buffer.Read(hIdx,c) == 1) {
+                        if(buffer.Read(hIdx, c) != 0) {
                             DrawHexCell(m_Pixels, hIdx, channelData.GetColor(c), maxRank);
                         }
+                        // 여기서 이번에 읽어들이는게 한 channel이도록 제한하지 않는 이상 마지막 채널의 색상으로 도배가 될 것임
+                        // DrawHexCell(m_Pixels, hIdx, channelData.GetColor(c), maxRank);
+                        /*
+                        if (buffer.Read(hIdx,c) == 1) {
+                            DrawHexCell(m_Pixels, hIdx, channelData.GetColor(c), maxRank);
+                        }
+                        */
                         // m_Pixels[hIdx] = channelData.GetColor(c);
                     }
                 }

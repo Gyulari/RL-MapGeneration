@@ -55,6 +55,7 @@ namespace Gyulari.HexSensor
         private int m_Rank;
 
         private float[][] m_Values;
+        private float[][] m_LinkValues;
 
         public HexagonBuffer(int numChannels, int rank)
         {
@@ -70,25 +71,27 @@ namespace Gyulari.HexSensor
         protected virtual void Initialize()
         {
             m_Values = new float[NumChannels][];
+            m_LinkValues = new float[NumChannels][];
 
             for (int i = 0; i < NumChannels; i++) {
                 m_Values[i] = new float[CalHexPropertyUtil.GetMaxHexCount(Rank)];
+                m_LinkValues[i] = new float[CalHexPropertyUtil.GetMaxHexCount(Rank)];
             }
         }
 
-        public virtual void Clear()
+        public void Clear()
         {
             ClearChannels(0, NumChannels);
         }
 
-        public virtual void ClearChannels(int start, int length)
+        public void ClearChannels(int start, int length)
         {
             for (int i = 0; i < length; i++) {
                 ClearChannel(start + i);
             }
         }
 
-        public virtual void ClearChannel(int channel)
+        public void ClearChannel(int channel)
         {
             if (channel < NumChannels) {
                 Array.Clear(m_Values[channel], 0, m_Values[channel].Length);
@@ -96,15 +99,18 @@ namespace Gyulari.HexSensor
         }
 
         public virtual void Write(int hexIdx, int channel, float value)
-        {
+        {/*
+            m_LinkValues[hexIdx][channel] = link;
+            m_Values[hexIdx][channel][link] = value;
+            */
             m_Values[channel][hexIdx] = value;
         }
 
-        public virtual bool TryWrite(int hexIdx, int channel, float value)
+        public virtual bool TryWrite(int hexIdx, int channel, int link, float value)
         {
             bool isContained = Contains(hexIdx);
             if (isContained) {
-                Write(hexIdx, channel, value);
+                Write(channel, link, value);
             }
             return isContained;
         }
@@ -114,10 +120,10 @@ namespace Gyulari.HexSensor
             return m_Values[channel][hexIdx];
         }
 
-        public virtual bool TryRead(int hexIdx, int channel, out float value)
+        public virtual bool TryRead(int hexIdx, int channel, int link, out float value)
         {
             bool isContained = Contains(hexIdx);
-            value = isContained ? Read(hexIdx, channel) : 0;
+            value = isContained ? Read(channel, link) : 0;
             return isContained;
         }
 

@@ -6,25 +6,69 @@ using UnityEngine;
 
 public class DebugChannelData : IDisposable
 {
+    /*
     public static DebugChannelData FromSettings(
         IEncodingSettings settings, bool storePositions = true)
     {
         return new DebugChannelData(settings, storePositions);
     }
+    */
 
     public static DebugChannelData FromLabels(
-        IList<ChannelLabel> labels, bool storePositions = false)
+        IList<ChannelLabel> labels)
     {
-        return new DebugChannelData(labels, storePositions);
+        return new DebugChannelData(labels);
     }
 
+    private readonly IList<ChannelLabel> m_Labels;
+
+    private DebugChannelData(IList<ChannelLabel> labels)
+    {
+        m_Labels = new List<ChannelLabel>(labels);
+
+        /*
+        if (storePositions) {
+            HasHexagonPositions = true;
+            m_HexagonPositions = new List<HashSet<Vector2Int>>(n);
+
+            for (int i = 0; i < n; i++) {
+                m_HexagonPositions.Add(new HashSet<Vector2Int>());
+            }
+        }
+        */
+    }
+
+    public Color GetColor(int channel)
+    {
+        return m_Labels[channel].Color;
+    }
+
+    public string GetChannelName(int channel)
+    {
+        return m_Labels[channel].Name;
+    }
+
+    public void Dispose()
+    {
+        /*
+        if (HasHexagonPositions) {
+            ClearHexagonPositions();
+        }
+
+        if (m_HasObservables) {
+            m_Observables.Clear();
+        }
+        */
+
+        m_Labels.Clear();
+    }
+
+    /*
     public bool HasHexagonPositions { get; private set; }
     private readonly IList<HashSet<Vector2Int>> m_HexagonPositions;
 
     private readonly bool m_HasObservables;
     private readonly IList<Observable> m_Observables;
-
-    private readonly IList<ChannelLabel> m_Labels;
 
     private DebugChannelData(IEncodingSettings settings, bool storePositions)
     {
@@ -58,21 +102,6 @@ public class DebugChannelData : IDisposable
         }
     }
 
-    private DebugChannelData(IList<ChannelLabel> labels, bool storePositions)
-    {
-        m_Labels = new List<ChannelLabel>(labels);
-        int n = labels.Count;
-
-        if (storePositions) {
-            HasHexagonPositions = true;
-            m_HexagonPositions = new List<HashSet<Vector2Int>>(n);
-
-            for (int i = 0; i < n; i++) {
-                m_HexagonPositions.Add(new HashSet<Vector2Int>());
-            }
-        }
-    }
-
     public void ClearHexagonPositions()
     {
         foreach(var positions in m_HexagonPositions) {
@@ -95,28 +124,8 @@ public class DebugChannelData : IDisposable
         return m_HexagonPositions[channel];
     }
 
-    public string GetChannelName(int channel)
-    {
-        return m_Labels[channel].Name;
-    }
+    
 
-    public Color GetColor(int channel)
-    {
-        return m_HasObservables
-            ? m_Observables[channel].Color
-            : m_Labels[channel].Color;
-    }
-
-    public void Dispose()
-    {
-        if (HasHexagonPositions) {
-            ClearHexagonPositions();
-        }
-
-        if (m_HasObservables) {
-            m_Observables.Clear();
-        }
-
-        m_Labels.Clear();
-    }
+    
+    */
 }

@@ -288,7 +288,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: a0d5c6283fa6269429e22ca8fb92229f, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Test
@@ -327,12 +327,7 @@ MonoBehaviour:
   m_ObservationShape: 1 channel x 6 rank
   m_SensorName: HexagonSensor
   m_ObservationStacks: 1
-  m_CompressionType: 1
-  m_ObservationType: 0
   m_ChannelLabels: []
-  m_Debug_CreateSensorOnAwake: 0
-  m_Debug_CreateSensorOnValidate: 1
-  m_Debug_FrameInterval: 1
   m_Debug_DrawHexagonBuffer: 1
   m_Debug_HexagonBufferDrawer:
     Context: {fileID: 0}
@@ -355,6 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DecisionPeriod: 5
+  DecisionStep: 0
   TakeActionsBetweenDecisions: 1
 --- !u!114 &1063611359
 MonoBehaviour:

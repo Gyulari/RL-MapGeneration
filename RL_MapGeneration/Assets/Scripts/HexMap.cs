@@ -39,6 +39,8 @@ namespace Gyulari.HexMapGeneration
 
         public void ClearTiles()
         {
+            Buffer.Clear();
+
             var tiles = gameObject.transform.GetComponentsInChildren<Transform>(true);
 
             foreach (var tile in tiles) {

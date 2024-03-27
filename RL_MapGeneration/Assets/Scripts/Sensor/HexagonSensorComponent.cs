@@ -10,7 +10,8 @@ namespace Gyulari.HexSensor
             // Create HexagonBuffer
             if (HexagonBuffer == null) {
                 HexagonShape.Validate();
-                HexagonBuffer = new ColorHexagonBuffer(HexagonShape);
+                // HexagonBuffer = new ColorHexagonBuffer(HexagonShape);
+                HexagonBuffer = new HexagonBuffer(HexagonShape);
             }
 
             return base.CreateSensors();

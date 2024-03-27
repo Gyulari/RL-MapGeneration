@@ -15,13 +15,14 @@ namespace Gyulari.HexMapGeneration
         public event Action<int, int, int> AddTileEvent;
 
         private HexagonBuffer m_SensorBuffer;
-        private HexagonBuffer m_HexMapBuffer;
+        // private HexagonBuffer m_HexMapBuffer;
 
         private int curHexIdx;
 
         public override void Initialize()
         {
-            m_SensorBuffer = new ColorHexagonBuffer(HexMap.NumChannels, Controller.m_MapRank);
+            // m_SensorBuffer = new ColorHexagonBuffer(HexMap.NumChannels, Controller.m_MapRank);
+            m_SensorBuffer = new HexagonBuffer(HexMap.NumChannels, Controller.m_MapRank);
 
             var sensorComp = GetComponent<HexagonSensorComponent>();
             sensorComp.HexagonBuffer = m_SensorBuffer;
@@ -33,15 +34,17 @@ namespace Gyulari.HexMapGeneration
             EpisodeBeginEvent.Invoke();
         }
 
+        /*
         public void StartEpisode(HexagonBuffer buffer)
         {
             m_HexMapBuffer ??= buffer;
         }
+        */
 
         public override void OnActionReceived(ActionBuffers actionBuffers)
         {
             var channel = actionBuffers.DiscreteActions[0];
-            var link = actionBuffers.DiscreteActions[1];
+            var link = actionBuffers.DiscreteActions[1]+2;
 
             m_SensorBuffer.Write(curHexIdx, channel, link);
             AddTileEvent.Invoke(curHexIdx, channel, link);
@@ -49,6 +52,7 @@ namespace Gyulari.HexMapGeneration
 
             if (curHexIdx == CalHexPropertyUtil.GetMaxHexCount(Controller.m_MapRank)) {
                 curHexIdx = 0;
+                m_SensorBuffer.Clear();
                 EpisodeEndEvent.Invoke();
                 EndEpisode();
             }

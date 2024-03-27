@@ -5,6 +5,10 @@ namespace Gyulari.HexSensor
 {
     public class ColorHexagonBuffer : HexagonBuffer
     {
+        public ColorHexagonBuffer(int numChannels, int rank)
+            : base(numChannels, rank) { }
+
+        /*
         protected Color32[][] m_Colors;
         protected Color32[] c_Black;
 
@@ -36,11 +40,9 @@ namespace Gyulari.HexSensor
 
         private void ClearColors()
         {
-            /*
-            for (int i = 0; i < NumChannels; i++) {
-                ClearLayerColors(i);
-            }
-            */
+            // for (int i = 0; i < NumChannels; i++) {
+                // ClearLayerColors(i);
+            // }            
         }
 
         public override void ClearChannels(int start, int length)
@@ -88,5 +90,6 @@ namespace Gyulari.HexSensor
 
             return (width, height);
         }
+        */
     }
 }

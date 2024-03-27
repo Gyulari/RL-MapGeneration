@@ -218,7 +218,7 @@ namespace Gyulari.HexSensor
                     Color.HSVToRGB(i / (float)n, 1, 1)));
             }
 
-            return DebugChannelData.FromLabels(labels, false);
+            return DebugChannelData.FromLabels(labels);
         }
 
         // Whether the HexagonSensor was created

@@ -47,11 +47,12 @@ public class HexagonSensor : ISensor
 
     public int Write(ObservationWriter writer)
     {
-        for(int i=0; i < m_MaxNumObs; i++) {
+        for(int i=0; i < m_MaxNumObs; i++) {    
             for (int ch=0; ch < m_HexagonBuffer.NumChannels; ch++) {
                 if(m_HexagonBuffer.Read(i, ch) != -1) {
                     writer[m_ObsSize * i] = ch;
                     writer[m_ObsSize * i + 1] = m_HexagonBuffer.Read(i, ch);
+                    // writer[m_ObsSize * i + 2] = i;
                 }
             }
         }
